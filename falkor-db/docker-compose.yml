@@ -5,7 +5,7 @@ services:
     image: falkordb/falkordb-server:latest
     container_name: falkordb-server
     ports:
-      - "6380:6379"
+      - "${PUBLIC_PORT:-6379}:6379"
     environment:
       # password cho Redis (bắt buộc nếu cần auth)
       - REDIS_ARGS=--requirepass ${FALKORDB_PASSWORD:-falkordb}
