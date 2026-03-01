@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  php84-fpm:
+    build:
+      context: .
+      dockerfile: ./DockerFile
+      args:
+        NODE_VERSION: 20
+        PHP_VERSION: 8.4
+        UID: 1000
+        GID: 1000
+    container_name: php84-fpm
+    restart: always
+    volumes:
+      - "${PROJECT_DIR:-/home/ben/projects}:/var/www"
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+    networks:
+      - ben
+networks:
+  ben:
+    external: true

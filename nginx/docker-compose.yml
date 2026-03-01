@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    container_name: nginx
+    ports:
+      - 80
+      - 443
+    volumes:
+      - ./config.d:/etc/nginx/conf.d
+      - ./certs:/etc/nginx/certs:ro
+      - "${PROJECT_DIR:-/home/ben/projects}:/var/www"
+    networks:
+      - ben
+
+networks:
+  ben:
+    external: true

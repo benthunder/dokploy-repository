@@ -1,0 +1,21 @@
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_2022
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Admin@123"
+      MSSQL_PID: "Developer"
+      TZ: "UTC"
+    volumes:
+      - ./data/sql:/var/opt/mssql
+    networks:
+      - ben
+    restart: always
+
+networks:
+  ben:
+    external: true
+    name: ben
