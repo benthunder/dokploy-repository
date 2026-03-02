@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     container_name: nginx
     ports:
-      - 80
-      - 443
+      - 80:80
+      - 443:443
     volumes:
       - ./config.d:/etc/nginx/conf.d
       - ./certs:/etc/nginx/certs:ro
