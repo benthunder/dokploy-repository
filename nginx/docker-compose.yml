@@ -9,7 +9,7 @@ services:
       - 443:443
     volumes:
       - "${CONF_DIR:-./config.d}:/etc/nginx/conf.d"
-      - "./certs:/etc/nginx/certs:ro"
+      - "${CERT_DIR:-./certs}:/etc/nginx/certs:ro"
       - "${PROJECT_DIR:-/home/ben/projects}:/var/www"
     networks:
       - ben
