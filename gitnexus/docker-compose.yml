@@ -1,0 +1,28 @@
+services:
+  gitnexus:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: gitnexus
+    restart: unless-stopped
+    environment:
+      WORKSPACE_DIR: ${WORKSPACE_DIR:-/workspace}
+      GITNEXUS_PORT: ${GITNEXUS_PORT:-4747}
+      GITNEXUS_HOST: ${GITNEXUS_HOST:-0.0.0.0}
+      AUTO_ANALYZE: ${AUTO_ANALYZE:-true}
+      ENABLE_EMBEDDINGS: ${ENABLE_EMBEDDINGS:-false}
+      GENERATE_SKILLS: ${GENERATE_SKILLS:-false}
+    ports:
+      - "${PUBLIC_PORT:-4747}:4747"
+    volumes:
+      - "${PROJECT_DIR:-/home/ben/projects}:${WORKSPACE_DIR:-/workspace}"
+      - gitnexus_home:/root/.gitnexus
+    networks:
+      - ben
+
+volumes:
+  gitnexus_home: {}
+
+networks:
+  ben:
+    external: true
