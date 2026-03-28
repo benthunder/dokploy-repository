@@ -1,7 +1,7 @@
 services:
-  opensearch-node: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
+  opensearch: # This is also the hostname of the container within the Docker network (i.e. https://opensearch-node1/)
     image: opensearchproject/opensearch:latest # Specifying the latest available image - modify if you want a specific version
-    container_name: opensearch-node
+    container_name: opensearch
     environment:
       - cluster.name=opensearch-cluster # Name the cluster
       - node.name=opensearch-node1 # Name the node that will run in this container
