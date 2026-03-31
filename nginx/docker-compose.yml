@@ -6,7 +6,7 @@ services:
     container_name: nginx
     ports:
       - ${PORT_HTTP:-80}:80
-      - ${PORT_HTTPs:-443}:443
+      - ${PORT_HTTPS:-443}:443
     volumes:
       - "${CONF_DIR:-./config.d}:/etc/nginx/conf.d"
       - "${CERT_DIR:-./certs}:/etc/nginx/certs:ro"
