@@ -1,25 +1,27 @@
 services:
   qdrant:
     image: "qdrant/qdrant:latest"
+    container_name: qdrant
+    restart: unless-stopped
     environment:
       - SERVICE_FQDN_QDRANT_6333
       - QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY}
-    networks: 
+    networks:
       - ben
     ports:
       - "${PUBLIC_PORT:-6333}:6333"
     volumes:
       - "qdrant_data:/qdrant/storage"
     healthcheck:
-      test:
-        - CMD-SHELL
-        - bash -c ':> /dev/tcp/127.0.0.1/${PUBLIC_PORT:-6333}' || exit 1
-      interval: 5s
-      timeout: 5s
+      test: ["CMD-SHELL", "curl -sf http://localhost:6333/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
       retries: 3
+      start_period: 30s
 
 volumes:
   qdrant_data: {}
+
 networks:
   ben:
     external: true

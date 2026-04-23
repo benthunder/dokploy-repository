@@ -1,6 +1,7 @@
 services:
   rabbitmq:
     image: rabbitmq:4.1-management
+    container_name: rabbitmq
     hostname: rabbitmq
     restart: unless-stopped
     environment:
@@ -10,10 +11,17 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     ports:
-      - ${PORT_1:-15672}:15672
-      - ${PORT_2:-5672}:5672
-    networks: 
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+      - "${RABBITMQ_AMQP_PORT:-5672}:5672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
       - ben
+
 volumes:
   rabbitmq-data: {}
 

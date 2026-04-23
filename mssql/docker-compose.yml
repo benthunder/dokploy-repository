@@ -2,18 +2,24 @@ services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: mssql_2022
+    restart: always
     ports:
       - "${PUBLIC_PORT:-1433}:1433"
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Admin@123"
+      SA_PASSWORD: "${SA_PASSWORD}"
       MSSQL_PID: "Developer"
       TZ: "UTC"
     volumes:
       - ./data/sql:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     networks:
       - ben
-    restart: always
 
 networks:
   ben:

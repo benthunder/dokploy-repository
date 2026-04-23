@@ -1,29 +1,27 @@
-version: "3.8"
-
 services:
   falkordb-server:
     image: falkordb/falkordb-server:latest
     container_name: falkordb-server
+    restart: unless-stopped
     ports:
       - "${PUBLIC_PORT:-6379}:6379"
     environment:
-      # password cho Redis (bắt buộc nếu cần auth)
       - REDIS_ARGS=--requirepass ${FALKORDB_PASSWORD:-falkordb}
-      # cấu hình FalkorDB (thread, timeout…)
       - FALKORDB_ARGS=THREAD_COUNT 4
     volumes:
       - falkordb_data:/data
-    restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "-a", "$${FALKORDB_PASSWORD:-falkordb}", "ping"]
       interval: 30s
       timeout: 10s
       retries: 3
-    networks: 
+      start_period: 15s
+    networks:
       - ben
 
 volumes:
   falkordb_data:
+
 networks:
   ben:
     external: true
