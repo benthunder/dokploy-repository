@@ -60,7 +60,7 @@ RUN composer global require laravel/installer
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
 
 # Install Node.js (includes npm and npx)
-RUN apt-get install -y nodejs npm
+RUN apt-get install -y nodejs
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
