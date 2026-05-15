@@ -25,8 +25,6 @@ echo ""
 
 # Check if containers are running
 SERVICES=(
-    "homelab-varnish"
-    "homelab-nginx"
     "homelab-php72"
     "homelab-php74"
     "homelab-php80"
@@ -78,10 +76,6 @@ check_endpoint() {
         ALL_HEALTHY=false
     fi
 }
-
-check_endpoint "http://localhost:80" "Varnish"
-check_endpoint "http://localhost:8080" "Nginx HTTP"
-check_endpoint "https://localhost:8443" "Nginx HTTPS"
 
 echo ""
 echo -e "${BLUE}============================================${NC}"
