@@ -33,18 +33,6 @@ clean: ## Stop and remove all containers, networks, volumes
 	@docker compose down -v
 	@echo "✓ All containers, networks, and volumes removed"
 
-purge-cache: ## Purge Varnish cache
-	@./scripts/homelab.sh purge-cache
-
-nginx-reload: ## Reload Nginx configuration
-	@./scripts/homelab.sh nginx-reload
-
-nginx-test: ## Test Nginx configuration
-	@./scripts/homelab.sh nginx-test
-
-varnish-stats: ## Show Varnish statistics
-	@./scripts/homelab.sh varnish-stats
-
 # PHP version shortcuts
 php72: ## Access PHP 7.2 container
 	@docker compose exec php72 bash
