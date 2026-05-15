@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     ports:
       - "${NGINX_PORT:-8080}:80"
+      - "${NGINX_PORT_SSL:-8443}:443"
     volumes:
       - "${CONF_DIR:-./nginx/conf.d}:/etc/nginx/conf.d"
       - "${CERT_DIR:-./nginx/certs}:/etc/nginx/certs:ro"
@@ -16,7 +17,7 @@ services:
       retries: 3
       start_period: 10s
     networks:
-      - web-tier
+      - homelab-network
 
   varnish:
     image: varnish:7.4
@@ -44,8 +45,8 @@ services:
       retries: 3
       start_period: 15s
     networks:
-      - web-tier
+      - homelab-network
 
 networks:
-  web-tier:
-    driver: bridge
+  homelab-network:
+    external: true

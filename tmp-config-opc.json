@@ -1,0 +1,18 @@
+{
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "a309d722094a7956a44ae4b9990a2a23c9a50c97c432a7f4"
+    },
+    "controlUi": {
+      "allowedOrigins": [
+        "*"
+      ],
+      "requireDeviceIdentity": false
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.5.7",
+    "lastTouchedAt": "2026-05-15T09:37:06.849Z"
+  }
+}
