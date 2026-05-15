@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw
+    restart: unless-stopped
+    command: ["openclaw", "gateway"]
+    ports:
+      - "${PORT:-8001}:8080"                              # Web UI / Server
+      - "${OPENCLAW_GATEWAY_PORT:-18789}:18789"          # Gateway
+      - "${OPENCLAW_BRIDGE_PORT:-18790}:18790"           # Bridge
+    environment:
+      # Server
+      - PORT=8080
+
+      # Gateway
+      - OPENCLAW_GATEWAY_PORT=18789
+      - OPENCLAW_BRIDGE_PORT=18790
+      - OPENCLAW_GATEWAY_CONTROL_UI_ALLOWED_ORIGINS=*
+
+      # State & Configuration
+      - OPENCLAW_STATE_DIR=/home/node/.openclaw
+      - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
+      - OPENCLAW_WORKSPACE_DIR=/home/node/.openclaw/workspace
+
+      # Security - Allow insecure for local/dev
+      - OPENCLAW_ALLOW_INSECURE_PRIVATE_WS=true
+
+      # Timezone
+      - TZ=UTC
+      - TERM=xterm-256color
+    volumes:
+      # State directory (config + workspace)
+      - openclaw-state:/home/node/.openclaw
+    networks:
+      - openclaw-network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+
+networks:
+  openclaw-network:
+    driver: bridge
+
+volumes:
+  openclaw-state:

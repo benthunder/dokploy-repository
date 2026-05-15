@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw
+    restart: unless-stopped
+    expose:
+      - "18789"
+      - "18790"
+    ports:
+      - "${PORT:-8001}:8080"                              # Web UI / Server
+      - "${OPENCLAW_BRIDGE_PORT:-18790}:18790"           # Bridge
+    environment:
+      # Server
+      - PORT=8080
+
+      # Gateway
+      - OPENCLAW_GATEWAY_PORT=18789
+      - OPENCLAW_BRIDGE_PORT=18790
+
+      # State & Configuration
+      - OPENCLAW_STATE_DIR=/home/node/.openclaw
+      - OPENCLAW_CONFIG_PATH=/home/node/.openclaw/openclaw.json
+      - OPENCLAW_WORKSPACE_DIR=/home/node/.openclaw/workspace
+
+      # Security - Allow insecure for local/dev
+      - OPENCLAW_ALLOW_INSECURE_PRIVATE_WS=true
+
+      # Timezone
+      - TZ=UTC
+      - TERM=xterm-256color
+    volumes:
+      # State directory (config + workspace)
+      - openclaw-state:/home/node/.openclaw
+    networks:
+      - openclaw-network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+
+  nginx-openclaw:
+    image: nginx:alpine
+    container_name: nginx-openclaw
+    restart: unless-stopped
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx-openclaw.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - openclaw-network
+    depends_on:
+      - openclaw
+
+networks:
+  openclaw-network:
+    driver: bridge
+
+volumes:
+  openclaw-state:

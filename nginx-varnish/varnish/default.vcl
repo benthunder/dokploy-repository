@@ -21,6 +21,7 @@ backend default {
 # ACL cho phép purge cache
 acl purge {
     "localhost";
+    "nginx";
     "127.0.0.1";
     "172.16.0.0"/12;  # Docker network range
 }
