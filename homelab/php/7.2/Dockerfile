@@ -114,7 +114,5 @@ EXPOSE 9000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD php-fpm -t || exit 1
 
-# Switch to non-root user
-USER appuser
-
+# PHP-FPM needs to run as root to read main config, then switches to pool user
 CMD ["php-fpm"]
