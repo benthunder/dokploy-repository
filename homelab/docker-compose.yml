@@ -1,37 +1,37 @@
 version: '3.8'
 services:
 
-  # ==========================================
-  # PHP-FPM 7.2
-  # ==========================================
-  php72:
-    build:
-      context: ./php/7.2
-      dockerfile: Dockerfile
-      args:
-        PHP_VERSION: "7.2"
-        UID: ${UID:-1000}
-        GID: ${GID:-1000}
-    container_name: homelab-php72
-    restart: unless-stopped
-    environment:
-      - PHP_VERSION=7.2
-      - XDEBUG_MODE=${XDEBUG_MODE:-off}
-      - XDEBUG_CONFIG=${XDEBUG_CONFIG:-}
-    volumes:
-      - "${PROJECT_DIR:-./projects}:/var/www:rw"
-      - ./configs/php/7.2/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./configs/php/7.2/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:ro
-      - ./configs/php/7.2/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
-      - php-logs:/var/log/php
-    healthcheck:
-      test: ["CMD-SHELL", "php-fpm -t || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-    networks:
-      - homelab-network
+  # # ==========================================
+  # # PHP-FPM 7.2
+  # # ==========================================
+  # php72:
+  #   build:
+  #     context: ./php/7.2
+  #     dockerfile: Dockerfile
+  #     args:
+  #       PHP_VERSION: "7.2"
+  #       UID: ${UID:-1000}
+  #       GID: ${GID:-1000}
+  #   container_name: homelab-php72
+  #   restart: unless-stopped
+  #   environment:
+  #     - PHP_VERSION=7.2
+  #     - XDEBUG_MODE=${XDEBUG_MODE:-off}
+  #     - XDEBUG_CONFIG=${XDEBUG_CONFIG:-}
+  #   volumes:
+  #     - "${PROJECT_DIR:-./projects}:/var/www:rw"
+  #     - ./configs/php/7.2/php.ini:/usr/local/etc/php/php.ini:ro
+  #     - ./configs/php/7.2/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+  #     - ./configs/php/7.2/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+  #     - php-logs:/var/log/php
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "php-fpm -t || exit 1"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 30s
+  #   networks:
+  #     - homelab-network
 
   # ==========================================
   # PHP-FPM 7.4
