@@ -34,6 +34,7 @@ RUN apk add --no-cache \
 
 # Configure and install PHP extensions
 # PHP 7.2 uses old GD configuration syntax
+# commit updated
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ \
