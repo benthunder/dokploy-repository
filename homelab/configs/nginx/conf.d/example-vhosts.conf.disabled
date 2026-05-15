@@ -1,0 +1,101 @@
+# ============================================
+# EXAMPLE: WordPress with PHP 7.4
+# ============================================
+# Usage: Copy this file and modify for your project
+# File: /etc/nginx/conf.d/mysite-php74.conf
+# ============================================
+
+server {
+    listen 8080;
+    server_name mysite-php74.local;
+
+    root /var/www/mysite/public;
+    index index.php index.html;
+
+    access_log /var/log/nginx/mysite-php74-access.log;
+    error_log /var/log/nginx/mysite-php74-error.log;
+
+    # WordPress permalinks
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    # PHP-FPM 7.4
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass php74:9000;  # ← Change this for different PHP version
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+
+        # FastCGI cache (optional)
+        # fastcgi_cache WORDPRESS;
+        # fastcgi_cache_valid 200 60m;
+        # fastcgi_cache_bypass $skip_cache;
+        # fastcgi_no_cache $skip_cache;
+    }
+
+    # Deny access to sensitive files
+    location ~ /\.(ht|git|env) {
+        deny all;
+    }
+
+    location ~ /wp-config.php {
+        deny all;
+    }
+
+    # Static files
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml|svg|woff|woff2|ttf|eot)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+}
+
+# ============================================
+# EXAMPLE: Laravel with PHP 8.2
+# ============================================
+
+server {
+    listen 8080;
+    server_name myapp-php82.local;
+
+    root /var/www/myapp/public;
+    index index.php;
+
+    access_log /var/log/nginx/myapp-php82-access.log;
+    error_log /var/log/nginx/myapp-php82-error.log;
+
+    # Laravel routing
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP-FPM 8.2
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass php82:9000;  # ← PHP 8.2
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+
+# ============================================
+# PHP VERSION MAPPING
+# ============================================
+# php72:9000 → PHP 7.2
+# php74:9000 → PHP 7.4
+# php80:9000 → PHP 8.0
+# php81:9000 → PHP 8.1
+# php82:9000 → PHP 8.2
+# php83:9000 → PHP 8.3
+# php84:9000 → PHP 8.4 (default)
+# ============================================

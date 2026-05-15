@@ -1,0 +1,38 @@
+# Environment
+.env
+
+# Projects directory (user's code)
+projects/*
+!projects/.gitkeep
+
+# Logs
+*.log
+
+# Xdebug output
+xdebug-output/*
+!xdebug-output/.gitkeep
+
+# Docker volumes
+volumes/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# SSL certificates (if custom)
+configs/nginx/ssl/*.key
+configs/nginx/ssl/*.crt
+configs/nginx/ssl/*.pem
+!configs/nginx/ssl/.gitkeep

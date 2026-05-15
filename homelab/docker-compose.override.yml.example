@@ -1,0 +1,59 @@
+# ============================================
+# DOCKER COMPOSE OVERRIDE (Development)
+# ============================================
+# This file is automatically loaded by docker compose
+# Use it for local development overrides
+# ============================================
+
+version: '3.8'
+
+services:
+  # Override Varnish for development (disable caching)
+  # varnish:
+  #   environment:
+  #     - VARNISH_SIZE=64M
+
+  # Override Nginx for development
+  # nginx:
+  #   volumes:
+  #     - ./configs/nginx/dev.conf:/etc/nginx/conf.d/dev.conf:ro
+
+  # Override PHP containers for development
+  # php84:
+  #   environment:
+  #     - XDEBUG_MODE=debug
+  #     - PHP_IDE_CONFIG=serverName=homelab
+
+  # Add additional services for development
+  # mailhog:
+  #   image: mailhog/mailhog:latest
+  #   container_name: homelab-mailhog
+  #   ports:
+  #     - "8025:8025"
+  #     - "1025:1025"
+  #   networks:
+  #     - homelab
+
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: homelab-mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: homelab
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   networks:
+  #     - homelab
+
+  # redis:
+  #   image: redis:alpine
+  #   container_name: homelab-redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - homelab
+
+# volumes:
+#   mysql-data:

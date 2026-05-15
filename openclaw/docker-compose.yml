@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      # ChiaSeGPU LLM Provider Configuration
+      - ANTHROPIC_API_KEY=sk-895afcbf05487cbe22c8455886865c2a0a77167950279771065baa7754d01232
+      - ANTHROPIC_BASE_URL=https://llm.chiasegpu.vn
+
+      # Model Configuration
+      - MODEL_SMALL=claude-haiku-4-5-20251001
+      - MODEL_MEDIUM=claude-haiku-4-5-20251001
+      - MODEL_HIGH=claude-haiku-4-5-20251001
+
+      # Optional: Discord Bot Configuration (uncomment if needed)
+      # - DISCORD_BOT_TOKEN=your_discord_bot_token_here
+      # - DISCORD_CHANNEL_ID=your_discord_channel_id_here
+
+      # Application Settings
+      - NODE_ENV=production
+      - PORT=3001
+
+    volumes:
+      - openclaw_data:/app/data
+      - openclaw_logs:/app/logs
+
+    networks:
+      - openclaw_network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  openclaw_data:
+    driver: local
+  openclaw_logs:
+    driver: local
+
+networks:
+  openclaw_network:
+    driver: bridge
