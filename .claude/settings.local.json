@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls *)",
+      "Bash(git -C /home/ben/tools/dokploy-repository diff HEAD)",
+      "Bash(sudo docker *)"
+    ]
+  }
+}
