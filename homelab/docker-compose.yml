@@ -31,7 +31,7 @@ services:
   #     retries: 3
   #     start_period: 30s
   #   networks:
-  #     - homelab-network
+  #     - dokploy-network
 
   # ==========================================
   # PHP-FPM 7.4
@@ -63,7 +63,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - homelab-network
+      - dokploy-network
 
   # ==========================================
   # PHP-FPM 8.0
@@ -95,7 +95,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - homelab-network
+      - dokploy-network
 
   # ==========================================
   # PHP-FPM 8.1
@@ -127,7 +127,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - homelab-network
+      - dokploy-network
 
   # ==========================================
   # PHP-FPM 8.2
@@ -159,7 +159,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - homelab-network
+      - dokploy-network
 
   # ==========================================
   # PHP-FPM 8.3
@@ -191,7 +191,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - homelab-network
+      - dokploy-network
 
   # ==========================================
   # PHP-FPM 8.4
@@ -223,7 +223,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - homelab-network
+      - dokploy-network
 
 
 volumes:
@@ -231,5 +231,5 @@ volumes:
     driver: local
 
 networks:
-  homelab-network:
+  dokploy-network:
     external: true 

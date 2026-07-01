@@ -17,7 +17,7 @@ services:
       retries: 3
       start_period: 10s
     networks:
-      - homelab-network
+      - dokploy-network
 
   varnish:
     image: varnish:7.4
@@ -45,8 +45,8 @@ services:
       retries: 3
       start_period: 15s
     networks:
-      - homelab-network
+      - dokploy-network
 
 networks:
-  homelab-network:
+  dokploy-network:
     external: true
